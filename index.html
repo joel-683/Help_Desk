@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123b35">
+<title>Community Help Centre</title>
+<style>
+:root { color-scheme: light dark; --page: light-dark(#f4f7f4,#101b19); --surface: light-dark(#ffffff,#182522); --text: light-dark(#172a26,#edf5f1); --muted: light-dark(#64756f,#a7b7b0); --border: light-dark(#dce6df,#30413b); --accent: light-dark(#176b54,#79d4ad); --accent-ink: light-dark(#ffffff,#10231d); --soft: light-dark(#e8f3ed,#20382f); }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+#app { min-height: 100vh; width: 100%; background: var(--page); border-radius: 0; }
+header { background: #123b35; color: #f7fff9; padding: 24px 20px 30px; }
+.header-inner, main, footer { width: min(100% - 32px, 760px); margin: 0 auto; }
+.topline { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: #b8e5d0; }
+.logo { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid #5c9480; border-radius: 12px; font-size: 20px; }
+h1 { font-size: clamp(29px, 7vw, 43px); line-height: 1.08; letter-spacing: -.04em; margin: 22px 0 10px; max-width: 540px; }
+header p { color: #d4e6dc; line-height: 1.6; margin: 0; max-width: 500px; }
+main { padding: 26px 0 40px; }
+.eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; margin: 0 0 7px; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+h2 { margin: 0; font-size: 23px; letter-spacing: -.025em; }
+.grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.category { appearance: none; text-align: left; display: flex; flex-direction: column; align-items: flex-start; min-height: 145px; padding: 17px; border: 1px solid var(--border); border-radius: 18px; background: var(--surface); color: var(--text); cursor: pointer; transition: transform .15s,border-color .15s; }
+.category:hover { transform: translateY(-2px); border-color: var(--accent); }
+.cat-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: var(--soft); color: var(--accent); font-size: 23px; margin-bottom: 15px; }
+.cat-name { font-size: 17px; font-weight: 750; }
+.cat-desc { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.45; }
+.arrow { margin-top: auto; align-self: flex-end; color: var(--accent); font-size: 20px; }
+.note { margin-top: 20px; padding: 15px 16px; border-radius: 14px; background: var(--soft); color: var(--text); font-size: 13px; line-height: 1.55; }
+footer { border-top: 1px solid var(--border); padding: 18px 0 28px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.hidden { display: none !important; }
+.back { display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent; color: var(--accent); padding: 0; margin-bottom: 24px; font: inherit; font-weight: 750; cursor: pointer; }
+.contact-card { border: 1px solid var(--border); border-radius: 20px; background: var(--surface); padding: 22px; }
+.contact-icon { display: grid; place-items: center; width: 58px; height: 58px; background: var(--soft); border-radius: 18px; font-size: 29px; margin-bottom: 18px; }
+.contact-card h2 { font-size: 28px; margin-bottom: 7px; }
+.contact-intro { color: var(--muted); line-height: 1.6; margin: 0 0 22px; }
+.leader { border-top: 1px solid var(--border); padding-top: 17px; margin-top: 17px; }
+.leader-name { font-size: 17px; font-weight: 800; }
+.leader-role { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+.action { min-height: 48px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; text-decoration: none; font-weight: 750; font-size: 14px; }
+.call { background: var(--accent); color: var(--accent-ink); }
+.whatsapp { background: #167c4b; color: #fff; }
+.empty-number { font-size: 12px; color: var(--muted); margin-top: 10px; }
+@media (max-width: 390px) { .grid { gap: 9px; } .category { padding: 13px; min-height: 140px; } .cat-name { font-size: 15px; } .actions { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="app">
+<header>
+  <div class="header-inner">
+    <div class="topline"><span class="logo">✳</span><span>Community support</span></div>
+    <h1 id="hero-title">How can we help you?</h1>
+    <p id="hero-subtitle">Choose a team below to find the right person to contact. We're here to help.</p>
+  </div>
+</header>
+<main>
+  <section id="home-view">
+    <div class="section-heading"><div><p class="eyebrow">Quick directory</p><h2>Choose a service</h2></div></div>
+    <div class="grid" id="category-grid"></div>
+    <div class="note">Choose the relevant team to see its contact person. Tap <strong>Call</strong> to phone them or <strong>WhatsApp</strong> to open a chat.</div>
+  </section>
+  <section id="detail-view" class="hidden">
+    <button class="back" id="back-button" type="button">← All services</button>
+    <div id="detail-content"></div>
+  </section>
+</main>
+<footer><div>Community Help Centre · Contact details are provided by the event organisers.</div><div>For urgent medical emergencies, contact your local emergency service.</div></footer>
+</div>
+<script>
+/* QUICK EDIT GUIDE
+   Update the title, subtitle, category names, descriptions, leader names and phone numbers below.
+   Use international format for phone numbers, digits only, including country code (India = 91).
+   Example: phone: "919876543210"
+   The site preview is a demo. Before publishing, replace every example contact with verified details.
+*/
+const SITE = {
+  title: "How can we help you?",
+  subtitle: "Choose a team below to find the right person to contact. We're here to help.",
+  categories: [
+    { id: "clinic", name: "Clinic", icon: "✚", description: "Medical support and health assistance", intro: "Contact the clinic team for medical support.", leaders: [{ name: "Clinic Team Leader", role: "Clinic coordinator", phone: "", whatsapp: "" }] },
+    { id: "transport", name: "Transport", icon: "↗", description: "Travel, vehicles and directions", intro: "Contact the transport team for travel help.", leaders: [{ name: "Transport Team Leader", role: "Transport coordinator", phone: "", whatsapp: "" }] },
+    { id: "food", name: "Food", icon: "♨", description: "Meals, refreshments and food queries", intro: "Contact the food team for meal-related questions.", leaders: [{ name: "Food Team Leader", role: "Food coordinator", phone: "", whatsapp: "" }] },
+    { id: "helpdesk", name: "Help Desk", icon: "?", description: "General questions and assistance", intro: "Not sure where to go? The help desk can guide you.", leaders: [{ name: "Help Desk Leader", role: "General assistance", phone: "", whatsapp: "" }] },
+    { id: "other", name: "Other Support", icon: "＋", description: "Anything else you need help with", intro: "Contact this team for other requests.", leaders: [{ name: "Support Team Leader", role: "Support coordinator", phone: "", whatsapp: "" }] }
+  ]
+};
+
+document.getElementById('hero-title').textContent = SITE.title;
+document.getElementById('hero-subtitle').textContent = SITE.subtitle;
+const grid = document.getElementById('category-grid');
+const homeView = document.getElementById('home-view');
+const detailView = document.getElementById('detail-view');
+const detailContent = document.getElementById('detail-content');
+function renderHome() {
+  grid.innerHTML = '';
+  SITE.categories.forEach(category => {
+    const button = document.createElement('button');
+    button.className = 'category'; button.type = 'button';
+    button.innerHTML = `<span class="cat-icon" aria-hidden="true">${category.icon}</span><span class="cat-name"></span><span class="cat-desc"></span><span class="arrow" aria-hidden="true">↗</span>`;
+    button.querySelector('.cat-name').textContent = category.name;
+    button.querySelector('.cat-desc').textContent = category.description;
+    button.addEventListener('click', () => openCategory(category.id));
+    grid.appendChild(button);
+  });
+}
+function safeNumber(value) { return (value || '').replace(/[^0-9]/g, ''); }
+function openCategory(id) {
+  const category = SITE.categories.find(item => item.id === id);
+  if (!category) return;
+  detailContent.innerHTML = '';
+  const card = document.createElement('div'); card.className = 'contact-card';
+  const icon = document.createElement('div'); icon.className = 'contact-icon'; icon.textContent = category.icon; card.appendChild(icon);
+  const heading = document.createElement('h2'); heading.textContent = category.name; card.appendChild(heading);
+  const intro = document.createElement('p'); intro.className = 'contact-intro'; intro.textContent = category.intro; card.appendChild(intro);
+  category.leaders.forEach(leader => {
+    const section = document.createElement('div'); section.className = 'leader';
+    const name = document.createElement('div'); name.className = 'leader-name'; name.textContent = leader.name; section.appendChild(name);
+    const role = document.createElement('div'); role.className = 'leader-role'; role.textContent = leader.role || ''; section.appendChild(role);
+    const actions = document.createElement('div'); actions.className = 'actions';
+    const phone = safeNumber(leader.phone); const wa = safeNumber(leader.whatsapp || leader.phone);
+    if (phone) { const a = document.createElement('a'); a.className = 'action call'; a.href = 'tel:+' + phone; a.textContent = '☎  Call'; actions.appendChild(a); }
+    if (wa) { const a = document.createElement('a'); a.className = 'action whatsapp'; a.href = 'https://wa.me/' + wa; a.target = '_blank'; a.rel = 'noopener'; a.textContent = '◉  WhatsApp'; actions.appendChild(a); }
+    if (!phone && !wa) { const msg = document.createElement('div'); msg.className = 'empty-number'; msg.textContent = 'Contact number to be added by the organisers.'; section.appendChild(msg); }
+    if (actions.children.length) section.appendChild(actions);
+    card.appendChild(section);
+  });
+  detailContent.appendChild(card);
+  homeView.classList.add('hidden'); detailView.classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.getElementById('back-button').addEventListener('click', () => { detailView.classList.add('hidden'); homeView.classList.remove('hidden'); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+renderHome();
+</script>
+</body>
+</html>
