@@ -166,7 +166,7 @@ function openCategory(id) {
             a.rel = 'noopener';
             a.textContent = '◉ WhatsApp';
             actions.appendChild(a);
-  }
+            const phone = safeNumber(leader.phone); const wa = safeNumber(leader.whatsapp || leader.phone);
 
   if (!phone && !wa) {
             const msg = document.createElement('div');
