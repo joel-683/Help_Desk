@@ -147,32 +147,37 @@ function openCategory(id) {
     const role = document.createElement('div'); role.className = 'leader-role'; role.textContent = leader.role || ''; section.appendChild(role);
     const actions = document.createElement('div'); actions.className = 'actions';
     const phone = safeNumber(leader.phone); const wa = safeNumber(leader.whatsapp || leader.phone);
-    if (phone) {
-                  const a = document.createElement('a');
-                    a.className = 'action call';
-                    a.href = 'tel:+' + phone;
-                    a.textContent = '☎ Call';
-                    actions.appendChild(a);
- }
+   const phone = safeNumber(leader.phone);
+const wa = safeNumber(leader.whatsapp || leader.phone);
 
-  if (wa) {
-            const a = document.createElement('a');
-            a.className = 'action whatsapp';
+if (phone) {
+  const a = document.createElement('a');
+  a.className = 'action call';
+  a.href = 'tel:+' + phone;
+  a.textContent = '☎ Call';
+  actions.appendChild(a);
+}
 
-            const message = `Hello ${leader.name}, I need help with ${category.name} at the event. Could you please assist me?`;
-          
-            a.href = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(message);
-            a.target = '_blank';
-            a.rel = 'noopener';
-            a.textContent = '◉ WhatsApp';
-            actions.appendChild(a);
-            const phone = safeNumber(leader.phone); const wa = safeNumber(leader.whatsapp || leader.phone);
+if (wa) {
+  const a = document.createElement('a');
+  a.className = 'action whatsapp';
+  const message = `Hello ${leader.name}, I need help with ${category.name} at the event. Could you please assist me?`;
+  a.href = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(message);
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.textContent = '◉ WhatsApp';
+  actions.appendChild(a);
+}
 
-  if (!phone && !wa) {
-            const msg = document.createElement('div');
-            msg.className = 'empty-number';
-            msg.textContent = 'Contact number to be added by the organisers.';
-            section.appendChild(msg);
+if (!phone && !wa) {
+  const msg = document.createElement('div');
+  msg.className = 'empty-number';
+  msg.textContent = 'Contact number to be added by the organisers.';
+  section.appendChild(msg);
+}
+
+if (actions.children.length) {
+  section.appendChild(actions);
 }
     card.appendChild(section);
   });
