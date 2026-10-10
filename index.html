@@ -110,6 +110,7 @@ const SITE = {
     {
   id: "transport",
   name: "Transport",
+  iconImage: "icons/transport.png",
   icon: "",
   iconSvg: '<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 25l3-10a3 3 0 0 1 3-2h16a3 3 0 0 1 3 2l3 10v5H8z"/><path d="M11 24h22"/><path d="M13 15h18"/><circle cx="14" cy="30" r="2.5"/><circle cx="30" cy="30" r="2.5"/></svg>',
   description: "Travel, vehicles and directions",
@@ -118,8 +119,8 @@ const SITE = {
 },
     { id: "food", name: "Food", icon: "♨", description: "Meals, refreshments and food queries", intro: "Contact the food team for meal-related questions.", leaders: [{ name: "C.C. Philip", phone: "+91 9361136242", whatsapp: "9361136242" }] },
     { id: "helpdesk", name: "Help Desk", icon: "?", description: "General questions and assistance", intro: "Not sure where to go? The help desk can guide you.", leaders: [{ name: "Matthew", phone: "+91 9361136242", whatsapp: "9361136242" }] },
-    { id: "accommodation", name: "Accommodation", icon: "🛏️", description: "Rooms, lodging and stay-related help", intro: "Need help with accommodation? Contact the team below.", leaders: [{ name: "Accommodation Team",  phone: "+91 9361136242", whatsapp: "9361136242" }] },
-    { id: "water", name: "Water", icon: "💧", description: "Drinking water and water supply assistance", intro: "Need drinking water? Contact the team below.", leaders: [{ name: "Water Team", phone: "+91 9361136242", whatsapp: "9361136242" }] },
+    { id: "accommodation", name: "Accommodation", iconImage: "icons/accommodation.png", icon: "", description: "Rooms, lodging and stay-related help", intro: "Need help with accommodation? Contact the team below.", leaders: [{ name: "Accommodation Team",  phone: "+91 9361136242", whatsapp: "9361136242" }] },
+    { id: "water", name: "Water", iconImage: "icons/water.png", icon: "", description: "Drinking water and water supply assistance", intro: "Need drinking water? Contact the team below.", leaders: [{ name: "Water Team", phone: "+91 9361136242", whatsapp: "9361136242" }] },
   ]
 };
 
@@ -134,12 +135,29 @@ function renderHome() {
   SITE.categories.forEach(category => {
     const button = document.createElement('button');
     button.className = 'category'; button.type = 'button';
-    button.innerHTML = `<span class="cat-icon" aria-hidden="true">${category.iconSvg || category.icon}</span><span class="cat-name"></span><span class="cat-desc"></span><span class="arrow" aria-hidden="true">↗</span>`;
-const svg = button.querySelector('.cat-icon svg');
-if (svg) {
-  svg.style.width = '28px';
-  svg.style.height = '28px';
+    button.innerHTML = `<span class="cat-icon" aria-hidden="true"></span><span class="cat-name"></span><span class="cat-desc"></span><span class="arrow" aria-hidden="true">↗</span>`;
+    
+const iconContainer = button.querySelector('.cat-icon');
+
+if (category.iconImage) {
+  const img = document.createElement('img');
+  img.src = category.iconImage;
+  img.alt = '';
+  img.style.width = '28px';
+  img.style.height = '28px';
+  img.style.objectFit = 'contain';
+  iconContainer.appendChild(img);
+} else if (category.iconSvg) {
+  iconContainer.innerHTML = category.iconSvg;
+  const svg = iconContainer.querySelector('svg');
+  if (svg) {
+    svg.style.width = '28px';
+    svg.style.height = '28px';
+  }
+} else {
+  iconContainer.textContent = category.icon;
 }
+
     button.querySelector('.cat-name').textContent = category.name;
     button.querySelector('.cat-desc').textContent = category.description;
     button.addEventListener('click', () => openCategory(category.id));
@@ -147,27 +165,35 @@ if (svg) {
   });
 }
 function safeNumber(value) { return (value || '').replace(/[^0-9]/g, ''); }
-function openCategory(id) {
+  function openCategory(id) {
   const category = SITE.categories.find(item => item.id === id);
   if (!category) return;
-
   detailContent.innerHTML = '';
-
   const card = document.createElement('div');
   card.className = 'contact-card';
-
   const icon = document.createElement('div');
-icon.className = 'contact-icon';
+  icon.className = 'contact-icon';
 
-if (category.iconSvg) {
-  icon.innerHTML = category.iconSvg;
-  icon.querySelector('svg').style.width = '34px';
-  icon.querySelector('svg').style.height = '34px';
-} else {
-  icon.textContent = category.icon;
-}
+  if (category.iconImage) {
+    const img = document.createElement('img');
+    img.src = category.iconImage;
+    img.alt = '';
+    img.style.width = '34px';
+    img.style.height = '34px';
+    img.style.objectFit = 'contain';
+    icon.appendChild(img);
+  } else if (category.iconSvg) {
+    icon.innerHTML = category.iconSvg;
+    const svg = icon.querySelector('svg');
+    if (svg) {
+      svg.style.width = '34px';
+      svg.style.height = '34px';
+    }
+  } else {
+    icon.textContent = category.icon;
+  }
 
-card.appendChild(icon);
+  card.appendChild(icon);
   
   const heading = document.createElement('h2');
   heading.textContent = category.name;
