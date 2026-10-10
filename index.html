@@ -12,7 +12,7 @@ body { margin: 0; background: var(--page); color: var(--text); font-family: Inte
 #app { min-height: 100vh; width: 100%; background: var(--page); border-radius: 0; }
 header { background: #123b35; color: #f7fff9; padding: 24px 20px 30px; }
 .header-inner, main, footer { width: min(100% - 32px, 760px); margin: 0 auto; }
-.topline { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: #b8e5d0; }
+.topline { display: none;}
 .logo { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid #5c9480; border-radius: 12px; font-size: 20px; }
 h1 { font-size: clamp(29px, 7vw, 43px); line-height: 1.08; letter-spacing: -.04em; margin: 22px 0 10px; max-width: 540px; }
 header p { color: #d4e6dc; line-height: 1.6; margin: 0; max-width: 500px; }
@@ -53,6 +53,7 @@ footer { border-top: 1px solid var(--border); padding: 18px 0 28px; color: var(-
     <div class="topline"><span class="logo">✳</span><span>Community support</span></div>
     <h1 id="hero-title">How can we help you?</h1>
     <p id="hero-subtitle">Choose a team below to find the right person to contact. We're here to help.</p>
+    <button class="back header-back hidden" id="back-button" type="button">◂ All services</button>
   </div>
 </header>
 <main>
@@ -62,7 +63,7 @@ footer { border-top: 1px solid var(--border); padding: 18px 0 28px; color: var(-
     <div class="note">Choose the relevant team to see its contact person. Tap <strong>Call</strong> to phone them or <strong>WhatsApp</strong> to open a chat.</div>
   </section>
   <section id="detail-view" class="hidden">
-    <button class="back" id="back-button" type="button">← All services</button>
+  
     <div id="detail-content"></div>
   </section>
 </main>
