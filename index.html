@@ -107,7 +107,7 @@ const SITE = {
   subtitle: "Choose a team below to find the right person to contact. We're here to help.",
   categories: [
     { id: "clinic", name: "Clinic", icon: "✚", description: "Medical support and health assistance", intro: "Contact the clinic team for medical support.", leaders: [{ name: "Dr. Ligin", phone: "+91 9361136242", whatsapp: "9361136242" }] },
-    { id: "transport", name: "Transport", icon: "↗", description: "Travel, vehicles and directions", intro: "Contact the transport team for travel help.", leaders: [{ name: "Winnie ", phone: "+91 9361136242", whatsapp: "9361136242" }] },
+    { id: "transport", name: "Transport", icon: "", iconSvg: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19l2-7a3 3 0 0 1 3-2h14a3 3 0 0 1 3 2l2 7v5H4z"/><path d="M7 19h18"/><circle cx="9" cy="23" r="2"/><circle cx="23" cy="23" r="2"/></svg>', description: "Travel, vehicles and directions", intro: "Contact the transport team for travel help.", leaders: [{ name: "Winnie ", phone: "+91 9361136242", whatsapp: "9361136242" }] },
     { id: "food", name: "Food", icon: "♨", description: "Meals, refreshments and food queries", intro: "Contact the food team for meal-related questions.", leaders: [{ name: "C.C. Philip", phone: "+91 9361136242", whatsapp: "9361136242" }] },
     { id: "helpdesk", name: "Help Desk", icon: "?", description: "General questions and assistance", intro: "Not sure where to go? The help desk can guide you.", leaders: [{ name: "Matthew", phone: "+91 9361136242", whatsapp: "9361136242" }] },
     { id: "other", name: "Other Support", icon: "＋", description: "Anything else you need help with", intro: "Contact this team for other requests.", leaders: [{ name: "Support Team Leader", role: "Support coordinator", phone: "", whatsapp: "" }] }
@@ -125,7 +125,12 @@ function renderHome() {
   SITE.categories.forEach(category => {
     const button = document.createElement('button');
     button.className = 'category'; button.type = 'button';
-    button.innerHTML = `<span class="cat-icon" aria-hidden="true">${category.icon}</span><span class="cat-name"></span><span class="cat-desc"></span><span class="arrow" aria-hidden="true">↗</span>`;
+   button.innerHTML = `<span class="cat-icon" aria-hidden="true">${category.iconSvg || category.icon}</span><span class="cat-name"></span><span class="cat-desc"></span><span class="arrow" aria-hidden="true">↗</span>`;
+const svg = button.querySelector('.cat-icon svg');
+if (svg) {
+  svg.style.width = '25px';
+  svg.style.height = '25px';
+}
     button.querySelector('.cat-name').textContent = category.name;
     button.querySelector('.cat-desc').textContent = category.description;
     button.addEventListener('click', () => openCategory(category.id));
@@ -143,10 +148,16 @@ function openCategory(id) {
   card.className = 'contact-card';
 
   const icon = document.createElement('div');
-  icon.className = 'contact-icon';
+  icon.className = 'contact-icon';if (category.iconSvg) {
+  icon.innerHTML = category.iconSvg;
+  icon.querySelector('svg').style.width = '32px';
+  icon.querySelector('svg').style.height = '32px';
+} else {
   icon.textContent = category.icon;
-  card.appendChild(icon);
+}
 
+card.appendChild(icon);
+  
   const heading = document.createElement('h2');
   heading.textContent = category.name;
   card.appendChild(heading);
