@@ -16,6 +16,20 @@ header { background: #123b35; color: #f7fff9; padding: 24px 20px 30px; }
 .logo { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid #5c9480; border-radius: 12px; font-size: 20px; }
 h1 { font-size: clamp(29px, 7vw, 43px); line-height: 1.08; letter-spacing: -.04em; margin: 22px 0 10px; max-width: 540px; } body.detail-open h1,
 body.detail-open #hero-subtitle { display: none; }
+body.detail-open header {
+  padding-top: 10px;
+  padding-bottom: 14px;
+}
+
+body.detail-open .header-back {
+  padding: 16px 24px;
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+body.detail-open main {
+  padding-top: 14px;
+}
 header p { color: #d4e6dc; line-height: 1.6; margin: 0; max-width: 500px; }
 main { padding: 26px 0 40px; }
 .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .12em; color: var(--muted); text-transform: uppercase; margin: 0 0 7px; }
