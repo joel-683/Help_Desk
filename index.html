@@ -296,35 +296,30 @@ if (category.iconImage) {
 }
 function safeNumber(value) { return (value || '').replace(/[^0-9]/g, ''); }
   function openCategory(id) {
-  const category = SITE.categories.find(item => item.id === id);
-  if (!category) return;
-  history.pushState({ page: 'category' }, '', '#category');
-  detailContent.innerHTML = '';
-  const card = document.createElement('div');
-  card.className = 'contact-card';
   const icon = document.createElement('div');
-  icon.className = 'contact-icon';
+icon.className = 'contact-icon';
 
-  if (category.iconImage) {
-    const img = document.createElement('img');
-    img.src = category.iconImage;
-    img.alt = '';
-    img.style.width = '34px';
-    img.style.height = '34px';
-    img.style.objectFit = 'contain';
-    icon.appendChild(img);
-  } else if (category.iconSvg) {
-    icon.innerHTML = category.iconSvg;
-    const svg = icon.querySelector('svg');
-    if (svg) {
-      svg.style.width = '34px';
-      svg.style.height = '34px';
-    }
-  } else {
-    icon.textContent = category.icon;
+if (category.iconImage) {
+  const img = document.createElement('img');
+  img.src = category.iconImage;
+  img.alt = '';
+  img.style.width = '34px';
+  img.style.height = '34px';
+  img.style.objectFit = 'contain';
+  icon.appendChild(img);
+} else if (category.iconSvg) {
+  icon.innerHTML = category.iconSvg;
+  const svg = icon.querySelector('svg');
+
+  if (svg) {
+    svg.style.width = '34px';
+    svg.style.height = '34px';
   }
+} else {
+  icon.textContent = category.icon;
+}
 
-  card.appendChild(icon);
+card.appendChild(icon);
   
 const header = document.createElement('div');
 header.className = 'contact-header';
