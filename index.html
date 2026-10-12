@@ -58,124 +58,14 @@ footer { border-top: 1px solid var(--border); padding: 18px 0 28px; color: var(-
 }
 .back { display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent; color: var(--accent); padding: 0; margin-bottom: 24px; font: inherit; font-weight: 750; cursor: pointer; }
 .contact-card { border: 1px solid var(--border); border-radius: 20px; background: var(--surface); padding: 22px; }
-.contact-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 22px;
-}
-
-.contact-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 22px;
-}
-
-.contact-icon {
-  flex: 0 0 58px;
-  width: 58px;
-  height: 58px;
-  display: grid;
-  place-items: center;
-  background: var(--soft);
-  border-radius: 16px;
-  font-size: 29px;
-  margin: 0;
-}
-
-.contact-heading {
-  min-width: 0;
-  flex: 1;
-}
-
-.contact-card h2 {
-  font-size: 24px;
-  line-height: 1.25;
-  margin: 0;
-}
-
-.contact-intro {
-  color: var(--muted);
-  line-height: 1.5;
-  margin: 5px 0 0;
-  font-size: 13px;
-}
-/* Individual contact cards */
-.leader {
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 17px;
-  margin-top: 14px;
-  background: var(--page);
-  box-shadow: 0 3px 12px #123b3508;
-}
-
-.leader-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.leader-avatar {
-  flex: 0 0 42px;
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-  background: var(--soft);
-  color: var(--accent);
-  font-size: 17px;
-  font-weight: 850;
-}
-
-.leader-info {
-  min-width: 0;
-  flex: 1;
-  padding-top: 1px;
-}
-
-.leader-name {
-  font-size: 17px;
-  font-weight: 800;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
-}
-
-.leader-role {
-  font-size: 13px;
-  color: var(--muted);
-  margin-top: 5px;
-  line-height: 1.45;
-}
-
-.actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 16px;
-}
-
-.action {
-  min-width: 0;
-  min-height: 46px;
-  border-radius: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 9px;
-  text-decoration: none;
-  font-weight: 750;
-  font-size: 14px;
-  transition: transform .15s, filter .15s;
-}
-
-.action:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.04);
-}
+.contact-icon { display: grid; place-items: center; width: 58px; height: 58px; background: var(--soft); border-radius: 18px; font-size: 29px; margin-bottom: 18px; }
+.contact-card h2 { font-size: 28px; margin-bottom: 7px; }
+.contact-intro { color: var(--muted); line-height: 1.6; margin: 0 0 22px; }
+.leader { border-top: 1px solid var(--border); padding-top: 17px; margin-top: 17px; }
+.leader-name { font-size: 17px; font-weight: 800; }
+.leader-role { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 18px; }
+.action { min-height: 48px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; text-decoration: none; font-weight: 750; font-size: 14px; }
 .call { background: var(--accent); color: var(--accent-ink); }
 .whatsapp { background: #167c4b; color: #fff; }
 .empty-number { font-size: 12px; color: var(--muted); margin-top: 10px; }
@@ -295,21 +185,13 @@ if (category.iconImage) {
   });
 }
 function safeNumber(value) { return (value || '').replace(/[^0-9]/g, ''); }
-function openCategory(id) {
+  function openCategory(id) {
   const category = SITE.categories.find(item => item.id === id);
   if (!category) return;
-
   history.pushState({ page: 'category' }, '', '#category');
-
   detailContent.innerHTML = '';
-
   const card = document.createElement('div');
   card.className = 'contact-card';
-
-  // Category header: logo on the left, text on the right
-  const header = document.createElement('div');
-  header.className = 'contact-header';
-
   const icon = document.createElement('div');
   icon.className = 'contact-icon';
 
@@ -324,33 +206,25 @@ function openCategory(id) {
   } else if (category.iconSvg) {
     icon.innerHTML = category.iconSvg;
     const svg = icon.querySelector('svg');
-
     if (svg) {
-      svg.style.width = '32px';
-      svg.style.height = '32px';
+      svg.style.width = '34px';
+      svg.style.height = '34px';
     }
   } else {
-    icon.textContent = category.icon || '';
+    icon.textContent = category.icon;
   }
 
-  header.appendChild(icon);
-
-  const headingGroup = document.createElement('div');
-  headingGroup.className = 'contact-heading';
-
+  card.appendChild(icon);
+  
   const heading = document.createElement('h2');
   heading.textContent = category.name;
-  headingGroup.appendChild(heading);
+  card.appendChild(heading);
 
   const intro = document.createElement('p');
   intro.className = 'contact-intro';
   intro.textContent = category.intro;
-  headingGroup.appendChild(intro);
+  card.appendChild(intro);
 
-  header.appendChild(headingGroup);
-  card.appendChild(header);
-
-  // Contact people and their buttons
   category.leaders.forEach(leader => {
     const section = document.createElement('div');
     section.className = 'leader';
@@ -372,35 +246,30 @@ function openCategory(id) {
     const wa = safeNumber(leader.whatsapp || leader.phone);
 
     if (phone) {
-      const callButton = document.createElement('a');
-      callButton.className = 'action call';
-      callButton.href = 'tel:+' + phone;
-      callButton.textContent = '☎ Call';
-      actions.appendChild(callButton);
+      const a = document.createElement('a');
+      a.className = 'action call';
+      a.href = 'tel:+' + phone;
+      a.textContent = '☎ Call';
+      actions.appendChild(a);
     }
 
     if (wa) {
-      const whatsappButton = document.createElement('a');
-      whatsappButton.className = 'action whatsapp';
+      const a = document.createElement('a');
+      a.className = 'action whatsapp';
 
-      const message =
-        `Hello ${leader.name}, I need help with ${category.name} at the event. Could you please assist me?`;
+      const message = `Hello ${leader.name}, I need help with ${category.name} at the event. Could you please assist me?`;
 
-      whatsappButton.href =
-        'https://wa.me/' + wa + '?text=' + encodeURIComponent(message);
-
-      whatsappButton.target = '_blank';
-      whatsappButton.rel = 'noopener';
-      whatsappButton.textContent = '◉ WhatsApp';
-
-      actions.appendChild(whatsappButton);
+      a.href = 'https://wa.me/' + wa + '?text=' + encodeURIComponent(message);
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = '◉ WhatsApp';
+      actions.appendChild(a);
     }
 
     if (!phone && !wa) {
       const msg = document.createElement('div');
       msg.className = 'empty-number';
-      msg.textContent =
-        'Contact number to be added by the organisers.';
+      msg.textContent = 'Contact number to be added by the organisers.';
       section.appendChild(msg);
     }
 
@@ -411,17 +280,6 @@ function openCategory(id) {
     card.appendChild(section);
   });
 
-  // Show the selected category and hide the homepage
-  detailContent.appendChild(card);
-
-  homeView.classList.add('hidden');
-  detailView.classList.remove('hidden');
-
-  document.getElementById('back-button').classList.remove('hidden');
-  document.body.classList.add('detail-open');
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
   detailContent.appendChild(card);
   homeView.classList.add('hidden');
   detailView.classList.remove('hidden');
