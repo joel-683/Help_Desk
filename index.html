@@ -58,9 +58,42 @@ footer { border-top: 1px solid var(--border); padding: 18px 0 28px; color: var(-
 }
 .back { display: inline-flex; align-items: center; gap: 8px; border: 0; background: transparent; color: var(--accent); padding: 0; margin-bottom: 24px; font: inherit; font-weight: 750; cursor: pointer; }
 .contact-card { border: 1px solid var(--border); border-radius: 20px; background: var(--surface); padding: 22px; }
-.contact-icon { display: grid; place-items: center; width: 58px; height: 58px; background: var(--soft); border-radius: 18px; font-size: 29px; margin-bottom: 18px; }
-.contact-card h2 { font-size: 28px; margin-bottom: 7px; }
-.contact-intro { color: var(--muted); line-height: 1.6; margin: 0 0 22px; }
+.contact-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.contact-icon {
+  flex: 0 0 58px;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  background: var(--soft);
+  border-radius: 16px;
+  font-size: 29px;
+  margin: 0;
+}
+
+.contact-heading {
+  min-width: 0;
+  flex: 1;
+}
+
+.contact-card h2 {
+  font-size: 24px;
+  line-height: 1.25;
+  margin: 0;
+}
+
+.contact-intro {
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 5px 0 0;
+  font-size: 13px;
+}
 /* Individual contact cards */
 .leader {
   border: 1px solid var(--border);
@@ -286,15 +319,47 @@ function safeNumber(value) { return (value || '').replace(/[^0-9]/g, ''); }
 
   card.appendChild(icon);
   
-  const heading = document.createElement('h2');
-  heading.textContent = category.name;
-  card.appendChild(heading);
+const header = document.createElement('div');
+header.className = 'contact-header';
 
-  const intro = document.createElement('p');
-  intro.className = 'contact-intro';
-  intro.textContent = category.intro;
-  card.appendChild(intro);
+const icon = document.createElement('div');
+icon.className = 'contact-icon';
 
+if (category.iconImage) {
+  const img = document.createElement('img');
+  img.src = category.iconImage;
+  img.alt = '';
+  img.style.width = '34px';
+  img.style.height = '34px';
+  img.style.objectFit = 'contain';
+  icon.appendChild(img);
+} else if (category.iconSvg) {
+  icon.innerHTML = category.iconSvg;
+  const svg = icon.querySelector('svg');
+  if (svg) {
+    svg.style.width = '32px';
+    svg.style.height = '32px';
+  }
+} else {
+  icon.textContent = category.icon;
+}
+
+header.appendChild(icon);
+
+const headingGroup = document.createElement('div');
+headingGroup.className = 'contact-heading';
+
+const heading = document.createElement('h2');
+heading.textContent = category.name;
+headingGroup.appendChild(heading);
+
+const intro = document.createElement('p');
+intro.className = 'contact-intro';
+intro.textContent = category.intro;
+headingGroup.appendChild(intro);
+
+header.appendChild(headingGroup);
+card.appendChild(header);
   category.leaders.forEach(leader => {
     const section = document.createElement('div');
     section.className = 'leader';
