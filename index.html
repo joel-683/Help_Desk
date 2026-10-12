@@ -63,51 +63,51 @@ footer { border-top: 1px solid var(--border); padding: 18px 0 28px; color: var(-
 .contact-intro { color: var(--muted); line-height: 1.6; margin: 0 0 22px; }
 /* Individual contact cards */
 .leader {
-  background: var(--soft);
   border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 18px;
+  border-radius: 18px;
+  padding: 17px;
   margin-top: 14px;
+  background: var(--page);
   box-shadow: 0 3px 12px #123b3508;
 }
 
 .leader-top {
   display: flex;
-  align-items: center;
-  gap: 13px;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .leader-avatar {
-  flex: 0 0 46px;
-  width: 46px;
-  height: 46px;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
   display: grid;
   place-items: center;
-  border-radius: 16px;
-  background: var(--surface);
+  border-radius: 14px;
+  background: var(--soft);
   color: var(--accent);
-  border: 1px solid var(--border);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 850;
 }
 
 .leader-info {
   min-width: 0;
   flex: 1;
+  padding-top: 1px;
 }
 
 .leader-name {
   font-size: 17px;
   font-weight: 800;
-  line-height: 1.4;
+  line-height: 1.35;
   overflow-wrap: anywhere;
 }
 
 .leader-role {
   font-size: 13px;
   color: var(--muted);
-  margin-top: 4px;
-  line-height: 1.5;
+  margin-top: 5px;
+  line-height: 1.45;
 }
 
 .actions {
@@ -130,6 +130,11 @@ footer { border-top: 1px solid var(--border); padding: 18px 0 28px; color: var(-
   font-weight: 750;
   font-size: 14px;
   transition: transform .15s, filter .15s;
+}
+
+.action:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
 }
 .call { background: var(--accent); color: var(--accent-ink); }
 .whatsapp { background: #167c4b; color: #fff; }
